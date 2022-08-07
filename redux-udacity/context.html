@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Context</title>
+    <script src="https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Using React Context API
+        const Context = React.createContext();
+
+        // Components
+        function Parent() {
+            return (
+                <div>
+                    <h1>Parent</h1>
+                    <Child />
+                </div>
+            );
+        }
+
+        function Child() {
+            return (
+                <div>
+                    <h1>Child</h1>
+                    <Grandchild />
+                </div>
+            );
+        }
+
+        function Grandchild() {
+            return (
+                <Context.Consumer>
+                    {
+                        (name) => (
+                            <div>
+                                <h1>Grandchild</h1>
+                                <h3>Name: {name}</h3>
+                            </div>
+                        )
+                    }
+                </Context.Consumer>
+            );
+        }
+
+        class App extends React.Component {
+            render() {
+                const name = 'Tyler';
+
+                return (
+                    <Context.Provider value={name}>
+                        <Parent />
+                    </Context.Provider>
+                );
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
